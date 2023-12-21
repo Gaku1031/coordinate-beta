@@ -7,7 +7,12 @@ async function extractKeywords(imageData: string): Promise<string[]> {
   });
 
   try {
-    const [result] = await client.labelDetection({ image: { content: imageData } });
+    const [result] = await client.labelDetection({ 
+      image: { content: imageData },
+      imageContext: {
+        languageHints: ['ja']
+      } 
+    });
     const labels = result.labelAnnotations;
     return labels
       ? labels.map((label: protos.google.cloud.vision.v1.IEntityAnnotation) => label.description ?? '')

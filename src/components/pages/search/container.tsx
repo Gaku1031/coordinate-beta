@@ -26,9 +26,10 @@ export const Container: FC = () => {
         const response = await axios.post('/api/search', { imageData: base64Image });
         const keywords = response.data.keywords.join(' ');
   
+        const query = keywords + ', ファッションショッピングサイト 日本人男性';
+
         // 検索結果を取得
-        const results = await searchBing(keywords + 'ファッションに関連するサイト' + '画像付き');
-        console.log(results);
+        const results = await searchBing(query);
         setSearchResults(results);
       } catch (error) {
         console.error("Error in submitting image:", error);

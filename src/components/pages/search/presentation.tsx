@@ -23,7 +23,6 @@ export const Search: FC<Props> = ({
       <div>
         {searchResults.map((result, index) => (
           <div key={index} className="border-b border-gray-200 py-4">
-            {/* リンク */}
             <a
               href={result.displayUrl}
               target="_blank"
@@ -31,15 +30,13 @@ export const Search: FC<Props> = ({
             >
               {result.name}
             </a>
-            {/* スニペット */}
             <p className="text-gray-600">{result.snippet}</p>
-            {/* 画像 */}
             {result.imageUrl && (
               <Image
                 src={result.imageUrl}
                 alt={result.name}
-                width={100} // 適切なサイズに調整
-                height={100} // 適切なサイズに調整
+                width={100}
+                height={100}
                 className="mt-2"
               />
             )}
