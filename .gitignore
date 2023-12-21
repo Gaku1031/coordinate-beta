@@ -37,3 +37,7 @@ next-env.d.ts
 
 # env files
 .env
+
+/src/utils/createProductSet.ts
+/src/utils/extractKeywords.ts
+/coordinate-beta-aae8c823afad.json
