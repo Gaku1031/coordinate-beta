@@ -2,11 +2,13 @@ import 'tailwindcss/tailwind.css';
 import { FC } from 'react'
 import Image from 'next/image';
 import Loader from '../layout/Loader';
+import { LiaDownloadSolid } from "react-icons/lia";
 
 type Props = {
   showFooterForm: boolean;
   toggleFooterForm: () => void;
   loading: boolean;
+  downloadLoading: boolean;
   text: string;
   setText: (text: string) => void;
   images: string[];
@@ -23,12 +25,14 @@ type Props = {
   handleHeightChange: (value: string) => void;
   handleWeightChange: (value: string) => void;
   handleSeasonChange: (value: string) => void;
+  handleDownload: (imageUrl: string) => Promise<void>;
 };
 
 export const App: FC<Props> = ({ 
   showFooterForm, 
   toggleFooterForm, 
   loading, 
+  downloadLoading,
   images,
   handleGenerateImage,
   genderButton,
@@ -42,15 +46,31 @@ export const App: FC<Props> = ({
   handleGenderChange,
   handleHeightChange,
   handleWeightChange,
-  handleSeasonChange
+  handleSeasonChange,
+  handleDownload,
 }) => {
   return (
     <>
-      <div className="flex flex-col p-6 bg-custom-gradient h-[100vh] gap-4">
+      {/* ダウンロード中のローディングオーバーレイ */}
+      {downloadLoading && (
+          <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-100">
+            <Loader /> {/* ここでローダーを表示 */}
+          </div>
+      )}
+      <div className={`flex flex-col p-6 bg-custom-gradient h-[100vh] gap-4 ${downloadLoading ? 'pointer-events-none' : ''}`}>
         {loading && <Loader height={'100vh'} />}
 
         {images.map((url) => (
-          <img key={url} src={url} alt={`Generated image ${url}`} />
+          <div key={url} className="relative group">
+            <img src={url} alt={`Generated image ${url}`} className="w-full h-auto" />
+            <button
+              onClick={() => handleDownload(url)}
+              className="absolute flex items-center top-0 right-0 bg-white shadow bg-opacity-75 p-1 text-xs text-gray-700 font-bold cursor-pointer transition-opacity duration-300 opacity-100 z-100"
+            >
+              <p>ダウンロード</p>
+              <LiaDownloadSolid />
+            </button>
+          </div>
         ))}
 
         {!showFooterForm &&

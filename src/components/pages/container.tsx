@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 
 export const Container: FC = () => {
   const [loading, setLoading] = useState(false);
+  const [downloadLoading, setDownloadLoading] = useState(false);
   const [text, setText] = useState("");
   const [showFooterForm, setShowFooterForm] = useState(false);
   const [images, setImages] = useState<string[]>([]);
@@ -65,6 +66,7 @@ export const Container: FC = () => {
   const generateImage = useGenerateImage();
 
   const handleGenerateImage = useCallback(async () => {
+    setShowFooterForm(!showFooterForm);
     setLoading(true);
     try {
       const generatedText = `性別: ${selectedKeyword_1}, 身長: ${selectedKeyword_2}cm, 体重: ${selectedKeyword_3}kgのユーザーに似合う全身の${selectedKeyword_4}コーディネート画像を生成してください。`;
@@ -74,13 +76,46 @@ export const Container: FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [selectedKeyword_1, selectedKeyword_2, selectedKeyword_3, selectedKeyword_4, generateImage]);
+  }, [selectedKeyword_1, selectedKeyword_2, selectedKeyword_3, selectedKeyword_4, generateImage, showFooterForm]);
+
+  const handleDownload = async (imageUrl: string) => {
+    setDownloadLoading(true);
+    try {
+      let blob;
+  
+      if (imageUrl.includes('dalle')) {
+        // 'dalle'が含まれる場合のプロキシ経由での取得
+        const response = await fetch(`/api/proxy?url=${encodeURIComponent(imageUrl)}`);
+        blob = await response.blob();
+      } else {
+        // 'dalle'が含まれない場合の直接取得
+        const response = await fetch(imageUrl);
+        blob = await response.blob();
+        toast('ダウンロードに失敗しました')
+      }
+  
+      // ダウンロード処理
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = imageUrl.split('/').pop() || 'download';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      toast('ダウンロードに失敗しました');
+    } finally {
+      setDownloadLoading(false);
+    }
+  };
 
   return (
     <App 
       showFooterForm={showFooterForm}
       toggleFooterForm={toggleFooterForm}
       loading={loading}
+      downloadLoading={downloadLoading}
       text={text}
       setText={setText}
       images={images}
@@ -97,6 +132,7 @@ export const Container: FC = () => {
       handleHeightChange={handleHeightChange}
       handleWeightChange={handleWeightChange}
       handleSeasonChange={handleSeasonChange}
+      handleDownload={handleDownload}
     />
   )
 }
