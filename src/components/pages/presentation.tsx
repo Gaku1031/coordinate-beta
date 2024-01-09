@@ -3,6 +3,7 @@ import { FC } from 'react'
 import Image from 'next/image';
 import Loader from '../layout/Loader';
 import { LiaDownloadSolid } from "react-icons/lia";
+import Link from 'next/link';
 
 type Props = {
   showFooterForm: boolean;
@@ -57,7 +58,7 @@ export const App: FC<Props> = ({
             <Loader /> {/* ここでローダーを表示 */}
           </div>
       )}
-      <div className={`flex flex-col p-6 bg-custom-gradient h-[100vh] gap-4 ${downloadLoading ? 'pointer-events-none' : ''}`}>
+      <div className={`flex flex-col p-6 bg-custom-gradient h-[100vh] gap-4 ${downloadLoading ? 'pointer-events-none' : ''}`} style={{ backgroundImage: 'url(/img/main.png)' }}>
         {loading && <Loader height={'100vh'} />}
 
         {images.map((url) => (
@@ -84,14 +85,18 @@ export const App: FC<Props> = ({
                   height={30}
                 />
               </button>
-              <button>
-                <Image
-                  src="/Icon/shop.svg"
-                  alt="shop-icon"
-                  width={40}
-                  height={40}
-                />
-              </button>
+              <Link
+                  href="/search"
+              >
+                <button>
+                  <Image
+                    src="/Icon/shop.svg"
+                    alt="shop-icon"
+                    width={40}
+                    height={40}
+                  />
+                </button>
+              </Link>
               <button>
                 <Image
                   src="/Icon/user.svg"

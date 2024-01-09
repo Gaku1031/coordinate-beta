@@ -3,6 +3,7 @@ import { App } from './presentation'
 import { useGenerateImage } from '@/hooks/useGenerateImage'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 export const Container: FC = () => {
   const [loading, setLoading] = useState(false);
@@ -14,6 +15,7 @@ export const Container: FC = () => {
   const [selectedKeyword_2, setSelectedKeyword_2] = useState("");
   const [selectedKeyword_3, setSelectedKeyword_3] = useState("");
   const [selectedKeyword_4, setSelectedKeyword_4] = useState("");
+  const router = useRouter();
 
   // ラジオボタンのデータ配列
   const genderButton = [
@@ -103,6 +105,8 @@ export const Container: FC = () => {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
+
+      router.push('/search');
     } catch (error) {
       toast('ダウンロードに失敗しました');
     } finally {
