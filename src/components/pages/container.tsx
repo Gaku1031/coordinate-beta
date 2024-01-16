@@ -18,9 +18,13 @@ export const Container: FC = () => {
   const router = useRouter();
 
   // ラジオボタンのデータ配列
-  const genderButton = [
-    { value: 'male', label: '男性' }, 
-    { value: 'female', label: '女性' }
+  const ageButton = [
+    { value: 'teens', label: '10代' },
+    { value: 'twenties', label: '20代' },
+    { value: 'thirties', label: '30代' },
+    { value: 'forties', label: '40代' },
+    { value: 'fifties', label: '50代' },
+    { value: 'sixties', label: '60代' },
   ];
   const heightButton = [
     { value: '141~150', label: '141cm~150cm' }, 
@@ -39,13 +43,13 @@ export const Container: FC = () => {
     { value: '91~100', label: '91kg~100kg' },
   ];
   const seasonButton = [
-    { value: '春', label: '春服' },
-    { value: '夏', label: '夏服' },
-    { value: '秋', label: '秋服' },
-    { value: '冬', label: '冬服' },
-  ]
+    { value: 'spring', label: '春服' },
+    { value: 'summer', label: '夏服' },
+    { value: 'autumn', label: '秋服' },
+    { value: 'winter', label: '冬服' },
+  ];
 
-  const handleGenderChange = useCallback((value: string) => {
+  const handleAgeChange = useCallback((value: string) => {
     setSelectedKeyword_1(value);
   }, []);
 
@@ -71,7 +75,8 @@ export const Container: FC = () => {
     setShowFooterForm(!showFooterForm);
     setLoading(true);
     try {
-      const generatedText = `性別: ${selectedKeyword_1}, 身長: ${selectedKeyword_2}cm, 体重: ${selectedKeyword_3}kgのユーザーに似合う全身の${selectedKeyword_4}コーディネート画像を生成してください。`;
+      // const generatedText = `Create a full-body fashion coordination image for a user who is ${selectedKeyword_1}, with a height in the range of ${selectedKeyword_2} cm, and a weight in the range of ${selectedKeyword_3} kg. The outfit should be suitable for ${selectedKeyword_4}. Please ensure a plain background to highlight the outfit and make sure that the gender distinction between male and female is clear.`;
+      const generatedText = `Create a full-body fashion coordination image for a male user in their ${selectedKeyword_1}, with a height in the range of ${selectedKeyword_2} cm, and a weight in the range of ${selectedKeyword_3} kg. The outfit should be suitable for ${selectedKeyword_4}. Please ensure a plain background to highlight the outfit.`;
       await generateImage(generatedText, setImages);
     } catch (error) {
       toast.error('予期せぬエラーが発生しました')
@@ -124,7 +129,7 @@ export const Container: FC = () => {
       setText={setText}
       images={images}
       handleGenerateImage={handleGenerateImage}
-      genderButton={genderButton}
+      ageButton={ageButton}
       heightButton={heightButton}
       weightButton={weightButton}
       seasonButton={seasonButton}
@@ -132,7 +137,7 @@ export const Container: FC = () => {
       selectedKeyword_2={selectedKeyword_2}
       selectedKeyword_3={selectedKeyword_3}
       selectedKeyword_4={selectedKeyword_4}
-      handleGenderChange={handleGenderChange}
+      handleAgeChange={handleAgeChange}
       handleHeightChange={handleHeightChange}
       handleWeightChange={handleWeightChange}
       handleSeasonChange={handleSeasonChange}

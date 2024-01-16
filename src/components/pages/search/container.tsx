@@ -2,16 +2,35 @@ import React, { FC, useState } from 'react'
 import { Search } from './presentation'
 import axios from 'axios';
 import { BingSearchResult } from '@/types/BingSearchResult';
+import { useRouter } from 'next/router';
 
 export const Container: FC = () => {
+  const router = useRouter();
   const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [searchResults, setSearchResults] = useState<BingSearchResult[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+      const file = e.target.files[0];
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
+
+  const handleImageChangeWithReset = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      if (e.target.files[0].size > 1048576) {
+        alert('画像のサイズは1MB以下にしてください。');
+        return;
+      }
+      handleImageChange(e);
+    }
+  };
+
+  const handleButtonClick = () => {
+    router.push('/');
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +45,7 @@ export const Container: FC = () => {
         const response = await axios.post('/api/search', { imageData: base64Image });
         const keywords = response.data.keywords.join(' ');
   
-        const query = keywords + ', ファッションショッピングサイト 日本人男性';
+        const query = keywords + ' メンズ, ' + '男性向けファッション, ' + 'オンラインショップ, ' + 'ファッションショッピングサイト';
 
         // 検索結果を取得
         const results = await searchBing(query);
@@ -57,6 +76,9 @@ export const Container: FC = () => {
     <Search 
       handleSubmit={handleSubmit}
       handleImageChange={handleImageChange}
+      handleImageChangeWithReset={handleImageChangeWithReset}
+      handleButtonClick={handleButtonClick}
+      imagePreview={imagePreview}
       searchResults={searchResults}
     />
   )

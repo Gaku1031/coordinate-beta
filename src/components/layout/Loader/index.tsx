@@ -12,6 +12,7 @@ export default function Loader({ height = '100vh' }: Props) {
         alignItems: 'center',
         justifyContent: 'center',
         height,
+        color: 'black',
       }}
     >
       <CircularProgress />

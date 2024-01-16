@@ -14,7 +14,7 @@ type Props = {
   setText: (text: string) => void;
   images: string[];
   handleGenerateImage: () => Promise<void>;
-  genderButton: { value: string; label: string }[];
+  ageButton: { value: string; label: string }[];
   heightButton: { value: string; label: string }[];
   weightButton: { value: string; label: string }[];
   seasonButton: { value: string; label: string }[];
@@ -22,7 +22,7 @@ type Props = {
   selectedKeyword_2: string;
   selectedKeyword_3: string;
   selectedKeyword_4: string;
-  handleGenderChange: (value: string) => void;
+  handleAgeChange: (value: string) => void;
   handleHeightChange: (value: string) => void;
   handleWeightChange: (value: string) => void;
   handleSeasonChange: (value: string) => void;
@@ -36,7 +36,7 @@ export const App: FC<Props> = ({
   downloadLoading,
   images,
   handleGenerateImage,
-  genderButton,
+  ageButton,
   heightButton,
   weightButton,
   seasonButton,
@@ -44,7 +44,7 @@ export const App: FC<Props> = ({
   selectedKeyword_2,
   selectedKeyword_3,
   selectedKeyword_4,
-  handleGenderChange,
+  handleAgeChange,
   handleHeightChange,
   handleWeightChange,
   handleSeasonChange,
@@ -61,6 +61,12 @@ export const App: FC<Props> = ({
       <div className={`flex flex-col p-6 bg-custom-gradient h-[100vh] gap-4 ${downloadLoading ? 'pointer-events-none' : ''}`} style={{ backgroundImage: 'url(/img/main.png)' }}>
         {loading && <Loader height={'100vh'} />}
 
+        <div className="fixed inset-0 flex justify-center items-center">
+          <p className="text-4xl text-black font-futura tracking-widest">
+            MATCH
+          </p>
+        </div>
+
         {images.map((url) => (
           <div key={url} className="relative group">
             <img src={url} alt={`Generated image ${url}`} className="w-full h-auto" />
@@ -75,36 +81,40 @@ export const App: FC<Props> = ({
         ))}
 
         {!showFooterForm &&
-          <nav className="bg-black rounded-full shadow w-80 px-8 py-4 z-50 fixed bottom-10 left-1/2 transform -translate-x-1/2">
-            <div className="flex items-center justify-between">
-              <button onClick={toggleFooterForm}>
-                <Image
-                  src="/Icon/search.svg"
-                  alt="search-icon"
-                  width={30}
-                  height={30}
-                />
-              </button>
-              <Link
-                  href="/search"
-              >
-                <button>
-                  <Image
-                    src="/Icon/shop.svg"
-                    alt="shop-icon"
-                    width={40}
-                    height={40}
-                  />
+          <nav className="fixed z-50 w-80 h-16 max-w-lg -translate-x-1/2 bg-black border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
+            <div className="grid h-full max-w-lg grid-cols-3 mx-auto">
+              <div className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <Link href="/search">
+                  <button data-tooltip-target="tooltip-search" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                    <svg className="w-5 h-5 mb-1 text-white dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                    <span className="sr-only">Search</span>
+                  </button>
+                </Link>
+              </div>
+                <div className="flex items-center justify-center">
+                    <button onClick={toggleFooterForm} data-tooltip-target="tooltip-new" type="button" className="inline-flex items-center justify-center w-10 h-10 font-medium bg-white rounded-full group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+                        <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                        </svg>
+                        <span className="sr-only">New item</span>
+                    </button>
+                </div>
+                <div id="tooltip-new" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Create new item
+                    <div className="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                <button data-tooltip-target="tooltip-profile" type="button" className="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                    <svg className="w-5 h-5 mb-1 text-white dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                    </svg>
+                    <span className="sr-only">Profile</span>
                 </button>
-              </Link>
-              <button>
-                <Image
-                  src="/Icon/user.svg"
-                  alt="user-icon"
-                  width={30}
-                  height={30}
-                />
-              </button>
+                <div id="tooltip-profile" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Profile
+                    <div className="tooltip-arrow" data-popper-arrow></div>
+                </div>
             </div>
           </nav>
         }
@@ -128,9 +138,9 @@ export const App: FC<Props> = ({
                   id="gender_select" 
                   className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                   value={selectedKeyword_1} 
-                  onChange={(e) => handleGenderChange(e.target.value)}
+                  onChange={(e) => handleAgeChange(e.target.value)}
                 >
-                  {genderButton.map((item_1) => (
+                  {ageButton.map((item_1) => (
                     <option key={item_1.label} value={item_1.value}>
                       {item_1.label}
                     </option>

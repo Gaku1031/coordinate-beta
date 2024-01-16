@@ -5,7 +5,6 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -20,6 +19,9 @@ const config: Config = {
         25: '6.25', // 100px
         80: '20rem', // 320px
         100: '25rem' // 400px
+      },
+      fontFamily: {
+        'futura': ['Futura', 'sans-serif'],
       },
     },
   },
