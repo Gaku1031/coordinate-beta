@@ -55,7 +55,7 @@ export const App: FC<Props> = ({
   return (
     <>
       {/* ダウンロード中のローディングオーバーレイ */}
-      {downloadLoading && (
+      {downloadLoading || loading && (
         <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-100">
           <Loader /> {/* ここでローダーを表示 */}
         </div>
