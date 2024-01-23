@@ -20,8 +20,10 @@
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.12.0",
     "react-toastify": "^9.1.3",
-    "shadcn-ui": "latest"
+    "shadcn-ui": "latest",
+    "sharp": "^0.33.1"
   },
   "devDependencies": {
     "@types/node": "^20",

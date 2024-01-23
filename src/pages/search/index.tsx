@@ -1,10 +1,8 @@
-"use client";
-
 import { NextPage } from "next";
 import Head from "next/head";
 import React, { FC } from "react";
 
-import { ImageUploadForm } from "@/components/organisms/search";
+import { Search } from "@/components/pages/search";
 
 const Component: FC = () => (
   <>
@@ -12,7 +10,7 @@ const Component: FC = () => (
       <title>画像検索画面</title>
     </Head>
 
-    <ImageUploadForm />
+    <Search />
   </>
 );
 
