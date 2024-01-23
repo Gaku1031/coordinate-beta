@@ -41,3 +41,5 @@ next-env.d.ts
 /src/utils/createProductSet.ts
 /src/utils/extractKeywords.ts
 /coordinate-beta-aae8c823afad.json
+
+.assets
