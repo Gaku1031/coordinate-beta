@@ -119,6 +119,10 @@ export const Container: FC = () => {
     }
   };
 
+  const navigateFusion = () => {
+    router.push('http://localhost:7870');
+  }
+
   return (
     <App 
       showFooterForm={showFooterForm}
@@ -142,6 +146,7 @@ export const Container: FC = () => {
       handleWeightChange={handleWeightChange}
       handleSeasonChange={handleSeasonChange}
       handleDownload={handleDownload}
+      navigateFusion={navigateFusion}
     />
   )
 }

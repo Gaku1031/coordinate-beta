@@ -15,7 +15,7 @@ export default function Loader({ height = '100vh' }: Props) {
         color: 'black',
       }}
     >
-      <CircularProgress />
+      <CircularProgress color="inherit" />
     </Box>
   );
 }
