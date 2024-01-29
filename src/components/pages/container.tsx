@@ -75,8 +75,7 @@ export const Container: FC = () => {
     setShowFooterForm(!showFooterForm);
     setLoading(true);
     try {
-      // const generatedText = `Create a full-body fashion coordination image for a user who is ${selectedKeyword_1}, with a height in the range of ${selectedKeyword_2} cm, and a weight in the range of ${selectedKeyword_3} kg. The outfit should be suitable for ${selectedKeyword_4}. Please ensure a plain background to highlight the outfit and make sure that the gender distinction between male and female is clear.`;
-      const generatedText = `Create a full-body fashion coordination image for a male user in their ${selectedKeyword_1}, with a height in the range of ${selectedKeyword_2} cm, and a weight in the range of ${selectedKeyword_3} kg. The outfit should be suitable for ${selectedKeyword_4}. Please ensure a plain background to highlight the outfit.`;
+      const generatedText = `Create a full-body fashion coordination image for a male user in their ${selectedKeyword_1}, with a height in the range of ${selectedKeyword_2} cm, and a weight in the range of ${selectedKeyword_3} kg. The outfit should be suitable for ${selectedKeyword_4}. The image should feature a front-facing, single male model. Please ensure a plain background to highlight the outfit.`;
       await generateImage(generatedText, setImages);
     } catch (error) {
       toast.error('予期せぬエラーが発生しました')

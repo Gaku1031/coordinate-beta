@@ -55,9 +55,14 @@ export const App: FC<Props> = ({
   return (
     <>
       {/* ダウンロード中のローディングオーバーレイ */}
-      {downloadLoading || loading && (
+      {loading && (
         <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-100">
-          <Loader /> {/* ここでローダーを表示 */}
+          <Loader />
+        </div>
+      )}
+      {downloadLoading && (
+        <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-100">
+          <Loader />
         </div>
       )}
       <div
@@ -203,7 +208,7 @@ export const App: FC<Props> = ({
             {/* セレクトボックス */}
             <div className="mt-4 grid grid-cols-2 gap-4">
               <div>
-                <label className="font-semibold text-white">性別</label>
+                <label className="font-semibold text-white">年代</label>
                 <select
                   id="gender_select"
                   className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
